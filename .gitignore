@@ -1,0 +1,17 @@
+*.o
+*.gz
+penn-shredder
+.vscode
+
+*.c~
+
+# Local build and runtime artifacts
+*.o
+!parsejob.o
+!src/shell/parsejob.o
+bin/
+penn-shell
+*.fat
+*.log
+logs
+.DS_Store
