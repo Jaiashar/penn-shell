@@ -1,3 +1,7 @@
+# Original PennShell submission notes
+
+These notes preserve the original team attribution and implementation overview from Spring 2021. For current build instructions and verification, see the [project README](README.md).
+
 Names: Mytreyi Narayanaswamy, Jai Ashar
 
 PennKey: mytreyi, jaiashar

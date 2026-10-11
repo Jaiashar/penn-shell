@@ -4,6 +4,12 @@
 
 I built PennShell with Mytreyi Narayanaswamy for Penn CIS 548. We pair-programmed over Zoom and contributed roughly equally. It implements the machinery behind commands such as `printf hello | wc -c`, redirecting output to a file, and stopping or resuming jobs.
 
+## How a command runs
+
+PennShell reads a command through its interactive or file-input path and uses the supplied parser to identify jobs. It then forks processes, connects pipeline stages with file descriptors, applies redirection, and manages terminal ownership for foreground work. A linked-list job queue tracks processes that continue in the background.
+
+For `printf hello | wc -c`, the first process writes into a pipe and the second reads from it. For `sleep 10 &`, the shell returns to its prompt while retaining a job entry that can be listed or brought back to the foreground.
+
 ## What it does
 
 - Forks and executes commands, including multi-command pipelines.
@@ -38,6 +44,8 @@ cat < message.txt
 sleep 10 &
 jobs
 ```
+
+The pipeline prints `5`, and reading `message.txt` prints `hello`. Run `jobs` before the background sleep finishes to see its entry. Interactive `fg` and `bg` commands provide foreground/background control; their implementation is in [penn_shell.c](penn_shell.c).
 
 Exit with Ctrl-D. On Linux x86-64 with Clang and Make installed, `make` builds `./penn-shell` directly.
 
