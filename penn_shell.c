@@ -266,7 +266,7 @@ void execute_shell(bool async)
           // otherwise, redirect stdout to fd[i][1] (write end) 
           if (i == command_count - 1)
           {
-            int flags = append ? O_CREAT | O_APPEND : O_CREAT | O_TRUNC | O_WRONLY;
+            int flags = O_CREAT | O_WRONLY | (append ? O_APPEND : O_TRUNC);
             int new_stdout = outfile ? open(outfile, flags, 0644) : STDOUT_FILENO;
             dup2(new_stdout, STDOUT_FILENO);
           }

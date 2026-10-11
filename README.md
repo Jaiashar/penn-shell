@@ -1,5 +1,7 @@
 # PennShell
 
+[![Build and smoke tests](https://github.com/Jaiashar/penn-shell/actions/workflows/ci.yml/badge.svg?branch=main&event=push)](https://github.com/Jaiashar/penn-shell/actions/workflows/ci.yml)
+
 **A Unix shell in C with pipelines, I/O redirection, process groups, signals and foreground/background job control.**
 
 I built PennShell with Mytreyi Narayanaswamy for Penn CIS 548. We pair-programmed over Zoom and contributed roughly equally. It implements the machinery behind commands such as `printf hello | wc -c`, redirecting output to a file, and stopping or resuming jobs.
@@ -89,6 +91,16 @@ Exit with Ctrl-D. On Linux x86-64 with Clang and Make installed, `make` builds `
 ## Context and credit
 
 Jai Ashar and Mytreyi Narayanaswamy, Spring 2021. The [original submission README](ORIGINAL_README.md) documents our shared contribution. The Makefile retains Hannah Pan's author notice; the parser header/object are supplied course dependencies. See [PROVENANCE.md](PROVENANCE.md).
+
+## Automated verification
+
+The badge above reports the latest `main` push run. [The workflow](.github/workflows/ci.yml) builds the original C source in the Linux x86-64 container and runs [assertion-based smoke tests](tests/smoke.py) against the executables. Tests use a real pseudo-terminal with input echo disabled, so echoed commands cannot be mistaken for program output. Each run uses temporary files, bounded waits, and no network access inside the test container.
+
+Run the same checks locally after building the image:
+
+```sh
+docker run --rm --network none --pids-limit 256 penn-shell python3 tests/smoke.py
+```
 
 ## Validation
 
